@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  notebook:
+    build:
+      context: ./docker-images/jupyter-lab
+      dockerfile: ./Dockerfile
+    container_name: jupyter-lab-all-spark-container
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/
+      # Use this instead if you quanto to define a path using ENV VARIABLES
+      # - ${VOLUME_NOTEBOOKS}:/home/jovyan/
+    environment:
+      #
+      #Remember to change .env-example to .env
+      #
+      #   AWS S3 / MINIO
+      AWS_ENDPOINT_URL: ${AWS_ENDPOINT_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+
+      # JUPYTER
+      # Use this to define a custom token
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+
+
